@@ -1,0 +1,18 @@
+spring.datasource.driver-class-name=
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.url=
+
+spring.jpa.show-sql=true
+spring.jooq.sql-dialect=
+
+logging.level.org.springframework.web=INFO
+
+# reg properties
+registration.password.notEqualError=Пароли не совпадают.
+# {4, 8} - минимальное, максимальное кол-во символов
+registration.password.pattern=[a-zA-Z0-9-_]{4,16}
+registration.username.pattern=[a-zA-Zа-яА-Я ]{1,32}
+registration.password.patternError=Содержать -_, англ.символы, 4-8 символов.
+registration.username.patternError=Содержать проб, рус-англ симв., 1-16 символов.
+registration.username.existsError=Такой пользователь уже существует.
