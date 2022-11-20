@@ -1,18 +1,16 @@
 package ru.fa.forum.utils;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.PropertiesFactoryBean;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ResourceUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.Charset;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.Properties;
-import java.util.Set;
 
 @Component
 public class EnvUTF8 {
@@ -34,5 +32,15 @@ public class EnvUTF8 {
         }
 
         return properties.getProperty(property);
+    }
+
+    public String getNewsUploadImgPath() {
+        File dir = new File(Objects.requireNonNull(this.getClass().getClassLoader()
+                .getResource("")).getPath() + getProperty("news.uploadFile.path"));
+
+        if (!dir.exists())
+            dir.mkdir();
+
+        return dir.getAbsolutePath();
     }
 }

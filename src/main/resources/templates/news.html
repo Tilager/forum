@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="th" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,27 +18,27 @@
                 <nav class="header-navigation">
                     <ul class="header-list">
                         <li class="header-list__item">
-                            <a href="index.html" class="header-list__link">
+                            <a th:href="@{/index}" class="header-list__link">
                                 Главная
                             </a>
                         </li>
                         <li class="header-list__item">
-                            <a href="chat.html" class="header-list__link">
+                            <a th:href="@{/chat}" class="header-list__link">
                                 Чат
                             </a>
                         </li>
                         <li class="header-list__item-active">
-                            <a href="news.html" class="header-list__link-active">
+                            <a th:href="@{/news}" class="header-list__link-active">
                                 Новости
                             </a>
                         </li>
                         <li class="header-list__item">
-                            <a href="profile.html" class="header-list__link">
+                            <a th:href="@{/profile}" class="header-list__link">
                                 Профиль
                             </a>
                         </li>
                          <li class="header-list__item">
-                                <a href="login.html" class="header-list__link">
+                                <a th:href="@{/login}" class="header-list__link">
                                     Войти
                                 </a>
                             </li>
@@ -48,44 +49,36 @@
     </header>
     <main class="main">
         <div class="main-container">
-            <div class="main-container-items">
-                <div class="item">
-                    <div class="item-photo">
-                        <img src="/img/bg.jpg" alt="photo">
-                    </div>
-                    <div class="item-text">
-                        <div class="item-title">
-                            <h2><a href="#">Из заголовка сразу должно быть понятно, о чём пойдёт речь</a></h2>
-                        </div>
-                        <div class="item-description">
-                            <p>Это описание чего-либо, оно не должно быть слишком длинным, но должно быть достаточно интересным, чтобы заинтересовать хоть кого-нибудь</p>
-                        </div>
-                    </div>
+<!--            <div sec:authorize="hasRole('ADMIN')" class="add-news-button">-->
+            <div class="add-news-button">
+                <button id="add__button">Добавить</button>
+                <div class="add-news">
+                    <form th:method="post" th:action="@{/news}" class="add-news-form"
+                            enctype="multipart/form-data" th:object="${news}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                        <input type="text" name="name" id="news-name"
+                               placeholder="Введите название новости" th:field="*{name}">
+                        <textarea name="description" id="news-description" cols="30" rows="5"
+                                  placeholder="Введите описание новости" th:field="*{description}"></textarea>
+                        <input id="add-news-attach-file_button" accept="image/jpeg,image/png,image/gif"
+                               type="file" name="file">
+                        <button type="submit" id="add-news_button">Добавить новость</button>
+                    </form>
                 </div>
-                <div class="item">
+            </div>
+            <div th:if="${!allNews.isEmpty()}" class="main-container-items">
+                <div th:each="pieceNews : ${allNews}" class="item">
                     <div class="item-photo">
-                        <img src="/img/bg.jpg" alt="photo">
+                        <img th:src="@{/img/news/{fileName}(fileName=${pieceNews.getFileName()})}" alt="photo">
                     </div>
                     <div class="item-text">
                         <div class="item-title">
-                            <h2><a href="#">Из заголовка сразу должно быть понятно, о чём пойдёт речь</a></h2>
+                            <h2 th:text="${pieceNews.getName()}">NAME</h2>
                         </div>
                         <div class="item-description">
-                            <p>Это описание чего-либо, оно не должно быть слишком длинным, но должно быть достаточно интересным, чтобы заинтересовать хоть кого-нибудь</p>
-                    </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="item-photo">
-                        <img src="/img/bg.jpg" alt="photo">
-                    </div>
-                    <div class="item-text">
-                        <div class="item-title">
-                            <h2><a href="#">Из заголовка сразу должно быть понятно, о чём пойдёт речь</a></h2>
+                            <p th:text="${pieceNews.getDescription()}"></p>
                         </div>
-                        <div class="item-description">
-                            <p>Это описание чего-либо, оно не должно быть слишком длинным, но должно быть достаточно интересным, чтобы заинтересовать хоть кого-нибудь</p>
-                    </div>
                     </div>
                 </div>
             </div>

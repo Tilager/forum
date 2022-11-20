@@ -3,6 +3,7 @@ package ru.fa.forum.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.fa.forum.models.UserModel;
@@ -28,8 +29,13 @@ public class UsersService {
 
     public void save (UserModel user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole("ROLE_USER");
 
         usersRepository.save(user);
         logger.info("Saved user - " + user.getUsername());
+    }
+
+    public Optional<UserModel> findById(Integer id) {
+        return usersRepository.findById(id);
     }
 }

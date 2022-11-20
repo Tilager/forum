@@ -20,6 +20,9 @@ public class UserModel {
     @Column(name="password")
     private String password;
 
+    @Column(name="role")
+    private String role;
+
     @NotEmpty
     @Transient
     private String confirm_password;
@@ -67,4 +70,11 @@ public class UserModel {
         this.globalError = globalError;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

@@ -92,7 +92,7 @@ header {
     content: '';
     position: absolute;
     bottom: 5.5px;
-    top: 1 px;
+    top: 1;
     bottom: 10px;
     width: 70px;
     height: 2.5px;
