@@ -1,0 +1,31 @@
+upload_path:
+
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username:
+    password:
+    url:
+  servlet.multipart:
+    max-file-size: 20MB
+    max-request-size: 20MB
+  web:
+    resources:
+      static-locations: classpath:/static/, file:/${upload_path}
+  session:
+    jdbc:
+      table-name: SPRING_SESSION
+      initialize-schema: always
+
+registration:
+  password:
+    pattern: "[a-zA-Z0-9-_]{4,16}"
+  username:
+    pattern: "[a-zA-ZА-Яа-я ]{1,32}"
+
+logging:
+  level:
+    org.springframework.web: DEBUG

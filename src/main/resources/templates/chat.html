@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://kit.fontawesome.com/8a2fbc0c4d.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/index/normalize.css">
+    <link rel="stylesheet" href="/css/chat/media.css">
+    <link rel="stylesheet" href="/css/chat/chat.css">
+    <script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
+    <script src="webjars/sockjs-client/1.5.1/sockjs.js"></script>
+    <script src="webjars/jquery/3.6.1/dist/jquery.js"></script>
+    <title>Чат</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <nav class="header-navigation">
+                    <ul class="header-list">
+                        <li class="header-list__item">
+                            <a th:href="@{/}" class="header-list__link">
+                                Главная
+                            </a>
+                        </li>
+                        <li class="header-list__item-active">
+                            <a th:href="@{/chat}" class="header-list__link-active">
+                                Чат
+                            </a>
+                        </li>
+                        <li class="header-list__item">
+                            <a th:href="@{/news}" class="header-list__link">
+                                Новости
+                            </a>
+                        </li>
+                        <li class="header-list__item">
+                            <a th:href="@{/profile}" class="header-list__link">
+                                Профиль
+                            </a>
+                        </li>
+                        <li class="header-list__item">
+                            <a href="#" class="header-list__link" id="logout">
+                                Выйти
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="online">
+            <div class="users-online">
+                <div th:each="user : ${loggedUsers}">
+                    <a href="#"><img th:src="@{/files/{uuid}/logo.png(uuid=${user.uuid})}" alt="user_photo" class="users-photo-online__item"></a>
+                    <a href="#"><p class="users-name-online" th:text="${user.username}">Nickname</p></a>
+                </div>
+            </div>
+            <div class="online-title">
+                <p>O<br>n<br>l<br>i<br>n<br>e</p>
+            </div>
+        </section>
+        <section class="files">
+            <div class="files-title">
+                <p>F<br>i<br>l<br>e<br>s</p>
+            </div>
+            <div class="recent-files">
+                <div th:each="msg: ${allMsgFiles}">
+                    <a th:href="|/files/${msg.fromUser.uuid}/uploadFiles/${msg.contentFileName}|"
+                       th:attr="download=${msg.contentFileName}"><img src="/img/files-icon.png" alt="file-icon"></a>
+
+                    <a th:href="|/files/${msg.fromUser.uuid}/uploadFiles/${msg.contentFileName}|"
+                       th:attr="download=${msg.contentFileName}"
+                       th:text="${msg.contentFileName}"></p></a>
+                </div>
+            </div>
+        </section>
+        <div class="main-container">
+            <div class="chat-container">
+                <div class="message" id="sendMsgForm">
+                    <div id="file-list"></div>
+                    <div class="message-area">
+                        <input type="text" name="message-area" id="message-area" placeholder="Напишите сообщение">
+                        <div class="message-area__item-file">
+                            <label for="file-input" class="fas fa-paperclip" style="color:white;"></label>
+
+                            <input style="display: none" id="file-input" type="file" name="message-file" />
+                        </div>
+                        <button type="submit" class="message-area__item-send" id="sendMsg">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+              <div class="chat-area">
+                  <div th:each="msg: ${messages}" id="messages">
+                      <div class="your-message" th:if="${msg.getFromUser().getUuid() == authUserUUID}">
+                          <div class="your-message-text"><p class="text" th:text="${msg.getContentText()}"></p></div>
+                          <div class="your-profile-photo"><img th:src="@{/files/{uuid}/logo.png(uuid=${authUserUUID})}" alt=""></div>
+                      </div>
+                      <div class="other-message" th:if="${msg.getFromUser().getUuid() != authUserUUID}">
+                          <div class="other-profile-photo"><img th:src="@{/files/{uuid}/logo.png(uuid=${msg.getFromUser().getUuid()})}" alt=""></div>
+                          <div class="other-message-text" th:text="${msg.getContentText()}"></div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </div>
+    </main>
+    <script src="/js/chat.js"></script>
+</body>
+</html>

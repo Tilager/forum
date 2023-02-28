@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/img/logo1.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/8a2fbc0c4d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/news/media.css">
+    <link rel="stylesheet" href="/css/index/normalize.css">
+    <link rel="stylesheet" href="/css/news/edit&&add-news.css">
+    <link rel="stylesheet" href="/css/news/news.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="webjars/stomp-websocket/2.3.4/stomp.js"></script>
+    <script src="webjars/sockjs-client/1.5.1/sockjs.js"></script>
+    <script src="webjars/jquery/3.6.1/dist/jquery.js"></script>
+    <script src="/js/onlineUsers.js"></script>
+    <title>Новости</title>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <nav class="header-navigation">
+                <ul class="header-list">
+                    <li class="header-list__item">
+                        <a th:href="@{/}" class="header-list__link">
+                            Главная
+                        </a>
+                    </li>
+                    <li class="header-list__item">
+                        <a th:href="@{/chat}" class="header-list__link">
+                            Чат
+                        </a>
+                    </li>
+                    <li class="header-list__item-active">
+                        <a th:href="@{/news}" class="header-list__link-active">
+                            Новости
+                        </a>
+                    </li>
+                    <li class="header-list__item">
+                        <a th:href="@{/profile}" class="header-list__link">
+                            Профиль
+                        </a>
+                    </li>
+                    <li class="header-list__item">
+                        <a href="#" class="header-list__link" id="logout">
+                            Выйти
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <div class="main-container">
+        <div class="add-news-button" sec:authorize="hasRole('ADMIN')">
+            <!--            <div class="add-news-button">-->
+            <button id="add__button">Добавить</button>
+            <div class="add-news">
+                <div class="add-news-form">
+                    <input type="text" name="name" id="news-name"
+                           placeholder="Введите название новости">
+                    <textarea name="description" id="news-description" cols="30" rows="5"
+                              placeholder="Введите описание новости"></textarea>
+                    <input id="add-news-attach-file_button" accept="image/jpeg,image/png,image/gif"
+                           type="file" name="file">
+                    <button id="add_news_button">Добавить новость</button>
+                </div>
+            </div>
+        </div>
+        <div th:if="${!allNews.isEmpty()}" class="main-container-items" id="news">
+            <div th:each="pieceNews : ${allNews}" class="item">
+                <div class="edit-news-content" sec:authorize="hasRole('ADMIN')">
+                    <div class="edit-news-button">
+                        <button class="edit__button"><i class="fas fa-ellipsis-v"></i></button>
+                        <div class="edit-news">
+                            <div class="edit-news-form">
+                                <input type="text" name="text"
+                                       placeholder="Измените название новости" th:value="${pieceNews.name}">
+                                <textarea name="description" cols="30" rows="5"
+                                          placeholder="Измените описание новости" th:text="${pieceNews.description}"></textarea>
+                                <button th:id="${pieceNews.uuid}" class="edit-news__button">Подтвердить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item-photo">
+                    <img th:src="@{/news/{fileName}(fileName=${pieceNews.fileName})}" alt="photo">
+                </div>
+                <div class="item-text">
+                    <div class="item-title">
+                        <h2 th:text="${pieceNews.name}">NAME</h2>
+                    </div>
+                    <div class="item-description">
+                        <p th:text="${pieceNews.description}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer-content">
+    <p class="footer-content_item">Реклама</p>
+    <p class="footer-content_item">Music by BAD-TR!P</p>
+    <p class="footer-content_item"><span class="by">Designed and created</span> by Brahma</p>
+</footer>
+<script src="/js/news.js"></script>
+</body>
+</html>

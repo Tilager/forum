@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="shortcut icon" href="/img/logo1.png" type="image/x-icon">
+        <link rel="stylesheet" href="/css/login/login.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="webjars/jquery/3.6.1/dist/jquery.js"></script>
+        <title>Войти</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="login-content">
+                <h1>Войти</h1>
+                <div class="login-forms">
+                    <form method="post" action="/login" style="display: contents">
+                        <div th:if="${param.error}" style="color: red">Неверный логин или пароль!</div>
+                        <input type="text" name="username" id="username"
+                               style="color: white" placeholder="Введите логин">
+                        <input type="password" name="password" id="password" style="color: white"
+                               placeholder="Введите пароль" autocomplete="off">
+                        <button type="submit" id="btn_register">Войти</button>
+                    </form>
+                </div>
+                <a href="/register">Ещё нет аккаунта?</a>
+            </div>
+        </div>
+
+        <script src="/js/login.js"></script>
+    </body>
+</html>

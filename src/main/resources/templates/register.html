@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="/img/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/register/register.css">
+    <script src="webjars/jquery/3.6.1/dist/jquery.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация</title>
+</head>
+<body>
+    <div class="container">
+        
+        <div class="login-content">
+            <h1>Зарегистрироваться</h1>
+            <div class="login-forms">
+                <form method="post" id="register-form">
+                    <input name="login" class="login-input" id="username" autocomplete="new-password" placeholder="Введите логин">
+                    <input type="password" class="login-input" name="password" id="password" autocomplete="new-password" placeholder="Введите пароль">
+                    <input type="password" class="login-input" name="confirm_pass" id="confirm_pass" autocomplete="new-password" placeholder="Подтвердите пароль">
+                    <!-- <button type="submit" id="btn_register">Зарегистрироваться</button> -->
+                    <button  class="login-input" type="submit">Зарегистрироваться </button>
+                </form>
+            </div>
+            <a href="/login">Уже есть аккаунт?</a>
+        </div>
+    </div>
+    <script src="/js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/img/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/profile/hovers.css">
+    <link rel="stylesheet" href="/css/profile/media.css">
+    <link rel="stylesheet" href="/css/index/normalize.css">
+    <link rel="stylesheet" href="/css/profile/profile.css">
+    <script src="/webjars/jquery/3.6.1/dist/jquery.js"></script>
+    <script src="/js/onlineUsers.js"></script>
+    <title>Профиль</title>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <nav class="header-navigation">
+                <ul class="header-list">
+                    <li class="header-list__item">
+                        <a th:href="@{/}" class="header-list__link">
+                            Главная
+                        </a>
+                    </li>
+                    <li class="header-list__item">
+                        <a th:href="@{/chat}" class="header-list__link">
+                            Чат
+                        </a>
+                    </li>
+                    <li class="header-list__item">
+                        <a th:href="@{/news}" class="header-list__link">
+                            Новости
+                        </a>
+                    </li>
+                    <li class="header-list__item-active">
+                        <a th:href="@{/profile}" class="header-list__link-active">
+                            Профиль
+                        </a>
+                    </li>
+                    <li class="header-list__item">
+                        <a href="#" class="header-list__link" id="logout">
+                            Выйти
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <div class="main-container">
+        <form  method="post" id="profile-form">
+            <div class="top-content">
+                <div class="profile_photo">
+                    <img th:src="@{/files/{uuid}/logo.png(uuid=${authUser.uuid})}" alt="profile_photo">
+                </div>
+                <div class="profile-header">
+                    <div class="profile-header__item-name">
+                        <p>Ваш Никнейм: <span class="profile-header-name" th:text="${authUser.username}"></span></p>
+                    </div>
+                    <div class="profile-header__item-upload-photo">
+                        <p>Чтобы загрузить фото профиля <input type="file" id="logo-upload"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="other-content">
+                <div class="other-content-about">
+                    <div class="other-content__item-about">
+                            <textarea name="about" id="about" cols="30" rows="1"
+                                      placeholder="Напишите о себе"
+                                      th:text="${authUser.about}"></textarea>
+                    </div>
+                </div>
+                <div class="other-content-password">
+                    <div class="other-content__item-password">
+                        <input name="password" id="password" type="password" class="input-profile"
+                               placeholder="Введите новый пароль" autocomplete="new-password"></input>
+                        <input name="login" id="login" type="text" class="input-profile"
+                                  placeholder="Введите новый логин"></input>
+                    </div>
+                </div>
+                <div class="other-content-download">
+                    <div class="other-content__item-download">
+                        <p th:if="${files.isEmpty()}">Загруженные файлы</p>
+                        <p th:if="${!files.isEmpty()}" th:each="fileName: ${files}"
+                           th:text="${fileName}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="button-save">
+                <div class="confirm-password">
+                    <input type="password" autocomplete="new-password" class="input-profile"
+                           name="repassword" id="confirm-password" placeholder="Введите старый пароль">
+                </div>
+                <button id="button-save" type="submit">Сохранить</button>
+            </div>
+        </form>
+    </div>
+</main>
+<footer class="footer-content">
+    <p class="footer-content_item">Реклама</p>
+    <p class="footer-content_item">Music by BAD-TR!P</p>
+    <p class="footer-content_item"><span class="by">Designed and created</span> by Brahma</p>
+</footer>
+<script src="/js/profile.js"></script>
+</body>
+</html>
