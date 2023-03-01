@@ -1,8 +1,6 @@
 package fa.forum.security;
 
-import fa.forum.models.UserModel;
 import fa.forum.services.UserDetailServicesIm;
-import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
